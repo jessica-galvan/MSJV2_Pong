@@ -60,12 +60,13 @@ public class BallScript : MonoBehaviour
         }
 
         //PARED IZQUIERDA
-        if (transform.position.x <= -paredVertical + radio)
+        if (transform.position.x <= -paletaLocation + radio)
         {
             float paletaI = paletaIzquierda.transform.position.y;
-            if (transform.position.y <= paletaI + paletaIzquierda.altura && transform.position.y <= paletaI + paletaIzquierda.altura)
+            if (transform.position.y <= paletaI + paletaIzquierda.altura && transform.position.y >= paletaI - paletaIzquierda.altura)
             {
                 velocidad.x = Mathf.Abs(velocidad.x);
+                print("hola");
             }
         }
         

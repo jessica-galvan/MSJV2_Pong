@@ -5,13 +5,17 @@ using UnityEngine.Events;
 
 public class BallScript : MonoBehaviour
 {
-    [SerializeField] private float radio = 0.5f;
+    public float radio = 0.5f;
+    public float scale = 1f;
     [SerializeField] private int speed;
     [SerializeField] private PaletaScript paletaDerecha;
     [SerializeField] private PaletaScript paletaIzquierda;
+    [SerializeField] private Transform powerUp;
+    //private float radioPowerUp = 1f;
     public int puntajeIzquierda = 0;
     public int puntajeDerecha = 0;
     public UnityEvent OnChangePoints = new UnityEvent();
+    [SerializeField] private Vector3 gravedad = new Vector3 (0f, 0f, 0f);
 
     //Settings
     private Vector3 velocidad;
@@ -22,11 +26,20 @@ public class BallScript : MonoBehaviour
     private bool startTimer = false;
     private float cooldown = 0.8f;
     private float timer = 0f;
+    private float originalRadio = 0.5f;
+    private float originalScale = 1f;
+    private bool canTimerScale;
+    private float timerScale = 0f;
+    private float scaleCD = 15f;
+
+    //Others
+    private SpriteRenderer spriteRender;
 
     void Start()
     {
         velocidad = new Vector3(speed, speed, 0f);
         ResetPosition();
+        spriteRender = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -66,7 +79,6 @@ public class BallScript : MonoBehaviour
             if (transform.position.y <= paletaI + paletaIzquierda.altura && transform.position.y >= paletaI - paletaIzquierda.altura)
             {
                 velocidad.x = Mathf.Abs(velocidad.x);
-                print("hola");
             }
         }
         
@@ -79,13 +91,26 @@ public class BallScript : MonoBehaviour
         //MOVIMIENTO
         if (canMove)
         {
-            transform.position += velocidad * Time.deltaTime;
+            //gravedad -> velocidad -> posicion
+            //La gravedad me modifica a la velocidad, la velocidad me modifica a la posicion
+
+            velocidad += gravedad * Time.deltaTime;
+
+            transform.position += velocidad * Time.deltaTime + 0.5f * gravedad * Time.deltaTime * Time.deltaTime;
         }
 
         //TIMER
         if(startTimer && !canMove & timer < Time.time)
         {
             canMove = true;
+        }
+
+        if (canTimerScale & timerScale < Time.time)
+        {
+            canTimerScale = false;
+            radio = originalRadio;
+            scale = originalScale;
+            this.gameObject.transform.localScale = new Vector3(scale, scale, 0f);
         }
     }
 
@@ -98,8 +123,38 @@ public class BallScript : MonoBehaviour
         timer = cooldown + Time.time;
     }
 
-    public string getPoints()
+    public string GetPoints()
     {
         return puntajeIzquierda + " | " + puntajeDerecha;
+    }
+
+    public void ChangeColor(int number)
+    {
+        switch (number)
+        {
+            case 1:
+                spriteRender.color = Color.red;
+                break;
+            case 2:
+                spriteRender.color = Color.blue;
+                break;
+            case 3:
+                spriteRender.color = Color.white;
+                break;
+        }
+    }
+
+    public void ChangeGravity()
+    {
+        gravedad.y = -gravedad.y;
+    }
+
+    public void ChangeSize(float newRadio, float newScale)
+    {
+        radio = newRadio;
+        scale = newScale;
+        this.gameObject.transform.localScale = new Vector3(scale, scale, 0f);
+        canTimerScale = true;
+        timerScale = scaleCD + Time.time;
     }
 }

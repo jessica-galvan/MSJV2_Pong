@@ -14,10 +14,9 @@ public class PointsScript : MonoBehaviour
         ball.OnChangePoints.AddListener(CountPoints);
         CountPoints();   
     }
-
     void CountPoints()
     {
-        txt.text = ball.getPoints();
+        txt.text = ball.GetPoints();
         
     }
 }

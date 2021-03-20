@@ -11,6 +11,7 @@ public class PowerUpScript : MonoBehaviour
     [SerializeField] private Transform points;
     [SerializeField] private PowerUpScript otherBall1;
     [SerializeField] private PowerUpScript otherBall2;
+    [SerializeField] private AudioSource clip;
 
     [Header("Other Settings")]
     [SerializeField] private float appearTime;
@@ -93,6 +94,7 @@ public class PowerUpScript : MonoBehaviour
         {
             if (canUseAbility)
             {
+                clip.Play();
                 canUseAbility = false;
                 switch (opcion)
                 {

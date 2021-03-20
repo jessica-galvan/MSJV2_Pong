@@ -10,13 +10,14 @@ public class BallScript : MonoBehaviour
     [SerializeField] private int speed;
     [SerializeField] private PaletaScript paletaDerecha;
     [SerializeField] private PaletaScript paletaIzquierda;
-    [SerializeField] private Transform powerUp;
+    [SerializeField] private PauseMenu winCondition;
+    [SerializeField] private AudioSource pointsSound;
     public int puntajeIzquierda = 0;
     public int puntajeDerecha = 0;
     public UnityEvent OnChangePoints = new UnityEvent();
-    [SerializeField] private Vector3 gravedad = new Vector3 (0f, 0f, 0f);
 
     //Settings
+    private Vector3 gravedad = new Vector3(0f, 0f, 0f);
     private Vector3 velocidad;
     private float paredHorizontal = 5f;
     private float paredVertical = 9.5f;
@@ -69,6 +70,7 @@ public class BallScript : MonoBehaviour
         if(transform.position.x >= paredVertical - radio)
         {
             puntajeIzquierda++;
+            pointsSound.Play();
             ResetPosition();
         }
 
@@ -85,6 +87,7 @@ public class BallScript : MonoBehaviour
         if(transform.position.x <= -paredVertical + radio)
         {
             puntajeDerecha++;
+            pointsSound.Play();
             ResetPosition();
         }
 
@@ -111,6 +114,14 @@ public class BallScript : MonoBehaviour
             radio = originalRadio;
             scale = originalScale;
             this.gameObject.transform.localScale = new Vector3(scale, scale, 0f);
+        }
+
+        if(puntajeDerecha >= 10)
+        {
+            winCondition.SelectWinner(2);
+        } else if(puntajeIzquierda >= 10)
+        {
+            winCondition.SelectWinner(1);
         }
     }
 

@@ -9,6 +9,7 @@ public class Menu : MonoBehaviour
     [Header("MainMenu Settings")]
     [SerializeField] private Button buttonPlay;
     [SerializeField] private Button buttonQuit;
+    [SerializeField] private AudioSource clip;
 
     void Start()
     {
@@ -18,10 +19,12 @@ public class Menu : MonoBehaviour
 
     private void OnClickPlayHandler() //inicia el juego
     {
+        clip.Play();
         SceneManager.LoadScene("SampleScene");
     }
     private void OnClickQuitHandler()  // Cierra el Menu
     {
+        clip.Play();
         Application.Quit();
         print("Cerramos el juego");
     }

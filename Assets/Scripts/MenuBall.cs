@@ -5,14 +5,13 @@ using UnityEngine;
 public class MenuBall : MonoBehaviour
 {
     [SerializeField] private int speed;
-    [SerializeField] private float changeTime = 5f;
+    [SerializeField] private float changeTime = 10f;
 
     //Settings
     private Vector3 gravedad = new Vector3(0f, 0f, 0f);
     private Vector3 velocidad;
-    private float paredHorizontalA = 3f;
-    private float paredHorizontalB = -5f;
-    private float paredVerticalD = 9.5f;
+    private float paredHorizontal = 5f;
+    private float paredVerticalD = 9f;
     private float paredVerticalI = -5f;
     private float radio = 0.5f;
 
@@ -29,21 +28,19 @@ public class MenuBall : MonoBehaviour
         velocidad = new Vector3(speed, speed, 0f);
         nextChange = Time.time + changeTime;
         spriteRender = GetComponent<SpriteRenderer>();
-        gravedad.y = -9.8f;
         print(gravedad);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //REBOTE ARRIBA
-        if (transform.position.y >= paredHorizontalA - radio)
+        //REBOTE EN X
+        if (transform.position.y >= paredHorizontal - radio)
         {
             velocidad.y = -Mathf.Abs(velocidad.y);
         }
 
-        //REBOTE ABAJO
-        if (transform.position.y <= paredHorizontalB + radio)
+        if (transform.position.y <= -paredHorizontal + radio)
         {
             velocidad.y = Mathf.Abs(velocidad.y);
         }
@@ -60,20 +57,26 @@ public class MenuBall : MonoBehaviour
             velocidad.x = Mathf.Abs(velocidad.x);
         }
 
+        if (Input.GetMouseButtonDown(0))
+        {
+            velocidad.x = -(velocidad.x);
+        }
+        if (Input.GetMouseButtonDown(1))
+        {
+            Gravity();
+        }
+
         //CAMBIAR GRAVEDAD
-        /*
-        if(nextChange < Time.time)
+        if (nextChange < Time.time)
         {
             canChange = true;
-            nextChange = Time.time + changeTime;
         }
 
         if (canChange)
         {
             canChange = false;
-            //Gravity();
+            Gravity();
         }
-        */
 
         //MOVIMIENTO
         velocidad += gravedad * Time.deltaTime;
@@ -88,21 +91,25 @@ public class MenuBall : MonoBehaviour
             case 1:
                 number++;
                 gravedad.y = 0f;
-                spriteRender.color = Color.black;
                 break;
 
             case 2:
                 number++;
                 gravedad.y = 9.8f;
-                spriteRender.color = Color.blue;
                 break;
 
             case 3:
                 number = 1;
                 gravedad.y = -9.8f;
-                spriteRender.color = Color.red;
                 break;
         }
-        print("change");
+        velocidad = new Vector3(speed, speed, 0f);
+        nextChange = Time.time + changeTime;
+        spriteRender.color = RandomColor();
+    }
+
+    private Color RandomColor() //para generar un color random
+    {
+        return new Color(Random.value, Random.value, Random.value);
     }
 }

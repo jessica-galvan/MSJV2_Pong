@@ -11,7 +11,6 @@ public class BallScript : MonoBehaviour
     [SerializeField] private PaletaScript paletaDerecha;
     [SerializeField] private PaletaScript paletaIzquierda;
     [SerializeField] private Transform powerUp;
-    //private float radioPowerUp = 1f;
     public int puntajeIzquierda = 0;
     public int puntajeDerecha = 0;
     public UnityEvent OnChangePoints = new UnityEvent();
@@ -40,6 +39,7 @@ public class BallScript : MonoBehaviour
         velocidad = new Vector3(speed, speed, 0f);
         ResetPosition();
         spriteRender = GetComponent<SpriteRenderer>();
+        gravedad.y = 0f;
     }
 
     void Update()
@@ -128,25 +128,14 @@ public class BallScript : MonoBehaviour
         return puntajeIzquierda + " | " + puntajeDerecha;
     }
 
-    public void ChangeColor(int number)
+    public void ChangeColor(Color randomColor)
     {
-        switch (number)
-        {
-            case 1:
-                spriteRender.color = Color.red;
-                break;
-            case 2:
-                spriteRender.color = Color.blue;
-                break;
-            case 3:
-                spriteRender.color = Color.white;
-                break;
-        }
+        spriteRender.color = randomColor;
     }
 
-    public void ChangeGravity()
+    public void ChangeGravity(float number)
     {
-        gravedad.y = -gravedad.y;
+        gravedad.y = number;
     }
 
     public void ChangeSize(float newRadio, float newScale)

@@ -1776,7 +1776,7 @@ MonoBehaviour:
   arriba: 273
   abajo: 274
   velocidadMaxima: 10
-  aceleracionTeclas: 6
+  aceleracionTeclas: 10
   altura: 1.1
 --- !u!212 &1219318001
 SpriteRenderer:
@@ -2035,7 +2035,7 @@ MonoBehaviour:
   arriba: 119
   abajo: 115
   velocidadMaxima: 10
-  aceleracionTeclas: 6
+  aceleracionTeclas: 10
   altura: 1.1
 --- !u!212 &1319942210
 SpriteRenderer:

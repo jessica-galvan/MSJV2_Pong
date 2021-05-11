@@ -1772,11 +1772,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57192a15ca8ad6a42b575359030b1518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masa: 1
   radio: 0.5
   arriba: 273
   abajo: 274
   velocidadMaxima: 10
-  aceleracionTeclas: 10
   altura: 1.1
 --- !u!212 &1219318001
 SpriteRenderer:
@@ -2031,11 +2031,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57192a15ca8ad6a42b575359030b1518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  masa: 1
   radio: 0.5
   arriba: 119
   abajo: 115
   velocidadMaxima: 10
-  aceleracionTeclas: 10
   altura: 1.1
 --- !u!212 &1319942210
 SpriteRenderer:
@@ -3056,7 +3056,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1818222587
 RectTransform:
   m_ObjectHideFlags: 0

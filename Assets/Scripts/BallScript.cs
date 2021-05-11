@@ -31,6 +31,7 @@ public class BallScript : MonoBehaviour
     private bool canTimerScale;
     private float timerScale = 0f;
     private float scaleCD = 15f;
+    private Vector3 fuerza;
 
     //Others
     private SpriteRenderer spriteRender;
@@ -41,10 +42,12 @@ public class BallScript : MonoBehaviour
         ResetPosition();
         spriteRender = GetComponent<SpriteRenderer>();
         gravedad.y = 0f;
+        
     }
 
     void Update()
     {
+        fuerza = Vector3.zero;
         //REBOTE EN X
         if(transform.position.y >= paredHorizontal - radio)
         {
